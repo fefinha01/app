@@ -1,0 +1,49 @@
+{
+  "name": "ravokbot-installer",
+  "version": "1.1.10",
+  "description": "Instalador do RavokBot (interface propria)",
+  "main": "main.js",
+  "author": "RavokBot",
+  "license": "UNLICENSED",
+  "private": true,
+  "build": {
+    "appId": "com.ravokbot.installer",
+    "productName": "RavokBot",
+    "icon": "../build/icon.ico",
+    "directories": {
+      "output": "../dist/_installer"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "style.css",
+      "app.js",
+      "meta.json",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "payload",
+        "to": "payload"
+      }
+    ],
+    "win": {
+      "icon": "../build/icon.ico",
+      "requestedExecutionLevel": "asInvoker",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "RavokBot-Setup-${version}.exe"
+    },
+    "asar": true
+  }
+}

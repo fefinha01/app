@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Instalação do RavokBot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="window" id="window">
+    <header class="titlebar">
+      <span class="titlebar-name">RavokBot · Instalador</span>
+      <div class="titlebar-actions">
+        <button class="tb-btn" id="btn-min" title="Minimizar" aria-label="Minimizar">
+          <svg viewBox="0 0 12 12"><path d="M2 6h8" /></svg>
+        </button>
+        <button class="tb-btn tb-close" id="btn-close" title="Fechar" aria-label="Fechar">
+          <svg viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" /></svg>
+        </button>
+      </div>
+    </header>
+
+    <aside class="brand">
+      <div class="brand-glow"></div>
+      <img class="brand-logo" src="assets/logo.png" alt="RavokBot" />
+      <p class="brand-tag">Gerenciador de telas<br />com proxy e automação</p>
+      <ol class="steps" id="steps">
+        <li data-step="welcome"><span class="dot"></span>Boas-vindas</li>
+        <li data-step="folder"><span class="dot"></span>Local da instalação</li>
+        <li data-step="install"><span class="dot"></span>Instalando</li>
+        <li data-step="done"><span class="dot"></span>Pronto</li>
+      </ol>
+      <span class="brand-version" id="version">v—</span>
+    </aside>
+
+    <section class="content">
+      <!-- 1. Boas-vindas -->
+      <div class="page" id="page-welcome">
+        <h1>Bem-vindo ao <span class="accent">RavokBot</span></h1>
+        <p class="lead">Vamos instalar o RavokBot no seu computador. Leva só alguns instantes.</p>
+        <ul class="features">
+          <li><i class="ico ico-bolt"></i><div><b>Instalação rápida</b><span>Sem configurar nada, é só clicar em avançar.</span></div></li>
+          <li><i class="ico ico-shortcut"></i><div><b>Atalhos prontos</b><span>Área de trabalho e menu Iniciar.</span></div></li>
+          <li><i class="ico ico-shield"></i><div><b>Seus dados protegidos</b><span>Atualizar não apaga suas contas, proxies e perfis.</span></div></li>
+        </ul>
+        <div class="notice notice-warn" id="running-note" hidden>O RavokBot está aberto e será fechado para concluir a instalação.</div>
+        <div class="actions">
+          <span></span>
+          <button class="btn btn-primary" id="btn-start">Começar<svg viewBox="0 0 16 16"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg></button>
+        </div>
+      </div>
+
+      <!-- 2. Local -->
+      <div class="page" id="page-folder" hidden>
+        <h1>Onde instalar?</h1>
+        <p class="lead">O RavokBot será instalado na pasta abaixo. Você pode escolher outro local.</p>
+        <label class="field-label" for="dir">Pasta de destino</label>
+        <div class="path-row">
+          <input id="dir" class="input" type="text" spellcheck="false" autocomplete="off" />
+          <button class="btn btn-ghost" id="btn-browse">Alterar…</button>
+        </div>
+        <div class="meta-row"><span>Espaço necessário</span><b id="space">—</b></div>
+        <label class="check" id="clean-row" hidden>
+          <input type="checkbox" id="clean" />
+          <span class="box"></span>
+          <span class="check-text"><b>Instalação limpa</b><small>Apagar dados antigos (contas, proxies, sessão e perfis das telas). Deixe desmarcado para manter tudo.</small></span>
+        </label>
+        <div class="notice notice-error" id="dir-error" hidden></div>
+        <div class="actions">
+          <button class="btn btn-ghost" id="btn-back">Voltar</button>
+          <button class="btn btn-primary" id="btn-install">Instalar<svg viewBox="0 0 16 16"><path d="M3 8h9M8.5 4l4 4-4 4" /></svg></button>
+        </div>
+      </div>
+
+      <!-- 3. Instalando -->
+      <div class="page" id="page-install" hidden>
+        <h1>Instalando…</h1>
+        <p class="lead" id="install-text">Preparando a instalação…</p>
+        <div class="percent"><span id="pct">0</span><small>%</small></div>
+        <div class="bar"><div class="bar-fill" id="bar"></div></div>
+        <p class="hint">Não feche esta janela até terminar.</p>
+        <div class="actions">
+          <span></span>
+          <button class="btn btn-ghost" id="btn-cancel">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- 4. Concluído -->
+      <div class="page" id="page-done" hidden>
+        <div class="done-badge"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg></div>
+        <h1>RavokBot instalado!</h1>
+        <p class="lead">A instalação foi concluída com sucesso. Um atalho foi criado na sua área de trabalho.</p>
+        <label class="check">
+          <input type="checkbox" id="open-after" checked />
+          <span class="box"></span>
+          <span class="check-text"><b>Abrir o RavokBot agora</b></span>
+        </label>
+        <div class="actions">
+          <span></span>
+          <button class="btn btn-primary" id="btn-finish">Concluir</button>
+        </div>
+      </div>
+
+      <!-- Erro -->
+      <div class="page" id="page-error" hidden>
+        <div class="done-badge bad"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17" /></svg></div>
+        <h1>Não foi possível instalar</h1>
+        <p class="lead" id="error-text"></p>
+        <div class="actions">
+          <button class="btn btn-ghost" id="btn-error-close">Fechar</button>
+          <button class="btn btn-primary" id="btn-retry">Tentar novamente</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal" id="modal" hidden>
+      <div class="modal-card">
+        <h2>Cancelar a instalação?</h2>
+        <p>O RavokBot ainda não foi instalado por completo.</p>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" id="modal-no">Continuar instalando</button>
+          <button class="btn btn-danger" id="modal-yes">Cancelar instalação</button>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "name": "ravokbot",
+  "version": "1.1.10",
+  "description": "RavokBot - gerenciador de múltiplas telas com proxy",
+  "main": "main.js",
+  "author": "RavokBot",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "predist:win": "node scripts/prepare.js",
+    "dist:win": "electron-builder --win --x64",
+    "dist:installer": "node scripts/build-installer.js"
+  },
+  "dependencies": {
+    "@ghostery/adblocker-puppeteer": "^2.20.1",
+    "proxy-chain": "^3.0.1",
+    "puppeteer-core": "^25.13.0"
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.ravokbot.app",
+    "productName": "RavokBot",
+    "icon": "build/icon.ico",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "license.js",
+      "app-config.json",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "language": "1046",
+      "allowToChangeInstallationDirectory": true,
+      "include": "build/installer.nsh",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerSidebar": "build/installerSidebar.bmp",
+      "uninstallerSidebar": "build/uninstallerSidebar.bmp",
+      "installerHeader": "build/installerHeader.bmp",
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true,
+      "shortcutName": "RavokBot",
+      "artifactName": "RavokBot-Setup-${version}.exe"
+    },
+    "portable": {
+      "artifactName": "RavokBot-Portable-${version}.exe"
+    }
+  }
+}
